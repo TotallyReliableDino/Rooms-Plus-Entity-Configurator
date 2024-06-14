@@ -1,89 +1,108 @@
 #include <iostream>
-#include <sstream>
+#include <string>
+#include <limits> // Include for numeric_limits
 
-// Function declarations
-std::string getUserInput(const std::string& prompt);
-bool getBooleanInput(const std::string& prompt);
-int getIntInput(const std::string& prompt);
+using namespace std;
 
-// Function to get user input
-std::string getUserInput(const std::string& prompt) {
-    std::string input;
-    std::cout << prompt;
-    std::getline(std::cin, input);
+string getUserInput(const string& prompt) {
+    string input;
+    cout << prompt;
+    getline(cin, input);
     return input;
 }
 
-// Function to get boolean input (1 for true, 0 for false)
-bool getBooleanInput(const std::string& prompt) {
-    int choice;
+bool getBooleanInput(const string& prompt) {
     while (true) {
-        std::cout << prompt;
-        std::string input;
-        std::getline(std::cin, input);
-        std::stringstream ss(input);
-        if (ss >> choice && (choice == 0 || choice == 1)) {
-            return choice == 1;
+        int value;
+        cout << prompt << " (1 for true, 0 for false): ";
+        cin >> value;
+        if (value == 0 || value == 1) {
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear the input buffer
+            return static_cast<bool>(value);
         } else {
-            std::cout << "Invalid input. Please enter 1 for yes or 0 for no." << std::endl;
+            cout << "Invalid input. Please enter 1 for true or 0 for false." << endl;
+            cin.clear(); // Clear error flags
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Discard incorrect input
         }
     }
 }
 
-// Function to get integer input
-int getIntInput(const std::string& prompt) {
-    int value;
+int getIntInput(const string& prompt) {
     while (true) {
-        std::cout << prompt;
-        std::string input;
-        std::getline(std::cin, input);
-        std::stringstream ss(input);
-        if (ss >> value) {
-            return value;
+        int value;
+        cout << prompt;
+        cin >> value;
+        if (cin.fail()) {
+            cout << "Invalid input. Please enter an integer." << endl;
+            cin.clear(); // Clear error flags
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Discard incorrect input
         } else {
-            std::cout << "Invalid input. Please enter a valid integer." << std::endl;
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear the input buffer
+            return value;
         }
     }
+}
+
+void generateLuaCode() {
+    string nearSoundID = getUserInput("Enter NearSoundID (rbxassetid://...): ");
+    bool spawnNextRoom = getBooleanInput("Should SpawnNextRoom be true?");
+    string entityName = getUserInput("Enter EntityName: ");
+    string pointLightColor = getUserInput("Enter PointLightColor (R, G, B): ");
+    bool chasePlayers = getBooleanInput("Should ChasePlayers be true?");
+    int minRebounds = getIntInput("Enter MinRebounds: ");
+    string imageID = getUserInput("Enter ImageID (rbxassetid://...): ");
+    string farSoundID = getUserInput("Enter FarSoundID (rbxassetid://...): ");
+    int waitTime = getIntInput("Enter WaitTime: ");
+    int speed = getIntInput("Enter Speed: ");
+    int maxRebounds = getIntInput("Enter MaxRebounds: ");
+    string deathMessage = getUserInput("Enter DeathMessage: ");
+    int roughness = getIntInput("Enter Roughness: ");
+    int fadeOut = getIntInput("Enter FadeOut: ");
+    int farSoundVol = getIntInput("Enter FarSoundVol: ");
+    int farSoundSpeed = getIntInput("Enter FarSoundSpeed: ");
+    int magnitude = getIntInput("Enter Magnitude: ");
+    int fadeIn = getIntInput("Enter FadeIn: ");
+    int lightBrightness = getIntInput("Enter LightBrightness: ");
+    int nearSoundSpeed = getIntInput("Enter NearSoundSpeed: ");
+    int nearSoundVol = getIntInput("Enter NearSoundVol: ");
+    int killRange = getIntInput("Enter KillRange: ");
+    int lightRange = getIntInput("Enter LightRange: ");
+    int reboundTime = getIntInput("Enter ReboundTime: ");
+
+    // Generate Lua code
+    cout << "\nGenerated Lua Code:" << endl;
+    cout << "local args = {" << endl;
+    cout << "    [1] = {" << endl;
+    cout << "        [\"FadeOut\"] = " << fadeOut << "," << endl;
+    cout << "        [\"MinRebounds\"] = " << minRebounds << "," << endl;
+    cout << "        [\"FarSoundVol\"] = " << farSoundVol << "," << endl;
+    cout << "        [\"EntityName\"] = \"" << entityName << "\"," << endl;
+    cout << "        [\"FarSoundSpeed\"] = " << farSoundSpeed << "," << endl;
+    cout << "        [\"Magnitude\"] = " << magnitude << "," << endl;
+    cout << "        [\"Speed\"] = " << speed << "," << endl;
+    cout << "        [\"Roughness\"] = " << roughness << "," << endl;
+    cout << "        [\"NearSoundID\"] = \"" << nearSoundID << "\"," << endl;
+    cout << "        [\"PointLightColor\"] = Color3.new(" << pointLightColor << ")," << endl;
+    cout << "        [\"MaxRebounds\"] = " << maxRebounds << "," << endl;
+    cout << "        [\"FadeIn\"] = " << fadeIn << "," << endl;
+    cout << "        [\"LightBrightness\"] = " << lightBrightness << "," << endl;
+    cout << "        [\"NearSoundSpeed\"] = " << nearSoundSpeed << "," << endl;
+    cout << "        [\"NearSoundVol\"] = " << nearSoundVol << "," << endl;
+    cout << "        [\"ChasePlayers\"] = " << (chasePlayers ? "true" : "false") << "," << endl;
+    cout << "        [\"KillRange\"] = " << killRange << "," << endl;
+    cout << "        [\"ImageID\"] = \"" << imageID << "\"," << endl;
+    cout << "        [\"FarSoundID\"] = \"" << farSoundID << "\"," << endl;
+    cout << "        [\"SpawnNextRoom\"] = " << (spawnNextRoom ? "true" : "false") << "," << endl;
+    cout << "        [\"WaitTime\"] = " << waitTime << "," << endl;
+    cout << "        [\"LightRange\"] = " << lightRange << "," << endl;
+    cout << "        [\"DeathMessage\"] = \"" << deathMessage << "\"," << endl;
+    cout << "        [\"ReboundTime\"] = " << reboundTime << endl;
+    cout << "    }" << endl;
+    cout << "};" << endl;
+    cout << "game:GetService(\"ReplicatedStorage\"):WaitForChild(\"Bricks\"):WaitForChild(\"CreateEntityNew\"):FireServer(unpack(args));" << endl;
 }
 
 int main() {
-    std::string nearSoundID, entityName, pointLightColor, imageID, farSoundID, deathMessage;
-    bool spawnNextRoom, chasePlayers;
-    int minRebounds, waitTime, speed, maxRebounds, roughness;
-
-    nearSoundID = getUserInput("Enter NearSoundID (rbxassetid://...): ");
-    spawnNextRoom = getBooleanInput("Should SpawnNextRoom be true? (1 for yes, 0 for no): ");
-    entityName = getUserInput("Enter EntityName: ");
-    pointLightColor = getUserInput("Enter PointLightColor (R, G, B): ");
-    chasePlayers = getBooleanInput("Should ChasePlayers be true? (1 for yes, 0 for no): ");
-    minRebounds = getIntInput("Enter MinRebounds: ");
-    imageID = getUserInput("Enter ImageID (rbxassetid://...): ");
-    farSoundID = getUserInput("Enter FarSoundID (rbxassetid://...): ");
-    waitTime = getIntInput("Enter WaitTime: ");
-    speed = getIntInput("Enter Speed: ");
-    maxRebounds = getIntInput("Enter MaxRebounds: ");
-    deathMessage = getUserInput("Enter DeathMessage: ");
-    roughness = getIntInput("Enter Roughness: ");
-
-    std::cout << "\nGenerated Lua Code:" << std::endl;
-    std::cout << "local args = {" << std::endl;
-    std::cout << "    [1] = {" << std::endl;
-    std::cout << "        [\"NearSoundID\"] = \"" << nearSoundID << "\"," << std::endl;
-    std::cout << "        [\"SpawnNextRoom\"] = " << (spawnNextRoom ? "true" : "false") << "," << std::endl;
-    std::cout << "        [\"EntityName\"] = \"" << entityName << "\"," << std::endl;
-    std::cout << "        [\"PointLightColor\"] = Color3.new(" << pointLightColor << ")," << std::endl;
-    std::cout << "        [\"ChasePlayers\"] = " << (chasePlayers ? "true" : "false") << "," << std::endl;
-    std::cout << "        [\"MinRebounds\"] = " << minRebounds << "," << std::endl;
-    std::cout << "        [\"ImageID\"] = \"" << imageID << "\"," << std::endl;
-    std::cout << "        [\"FarSoundID\"] = \"" << farSoundID << "\"," << std::endl;
-    std::cout << "        [\"WaitTime\"] = " << waitTime << "," << std::endl;
-    std::cout << "        [\"Speed\"] = " << speed << "," << std::endl;
-    std::cout << "        [\"MaxRebounds\"] = " << maxRebounds << "," << std::endl;
-    std::cout << "        [\"DeathMessage\"] = \"" << deathMessage << "\"," << std::endl;
-    std::cout << "        [\"Roughness\"] = " << roughness << std::endl;
-    std::cout << "    }" << std::endl;
-    std::cout << "}" << std::endl;
-    std::cout << "\ngame:GetService(\"ReplicatedStorage\"):WaitForChild(\"Bricks\"):WaitForChild(\"CreateEntityNew\"):FireServer(unpack(args))" << std::endl;
-
+    generateLuaCode();
     return 0;
 }
