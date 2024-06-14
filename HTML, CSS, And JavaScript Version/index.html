@@ -4,13 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rooms+ Entity Configurator</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
+    <div>
         <h1>Rooms+ Entity Configurator</h1>
         <form id="luaForm">
-            <!-- Form inputs -->
             <label for="NearSoundID">NearSoundID:</label>
             <input type="text" id="NearSoundID" placeholder="rbxassetid://...">
             
@@ -21,7 +20,7 @@
             <input type="text" id="EntityName" placeholder="Entity name">
             
             <label for="PointLightColor">PointLightColor (R, G, B):</label>
-            <input type="text" id="PointLightColor" placeholder="255, 255, 255">
+            <input type="text" id="PointLightColor" placeholder="255, 0, 0">
             
             <label for="ChasePlayers">ChasePlayers:</label>
             <input type="checkbox" id="ChasePlayers">
@@ -50,19 +49,47 @@
             <label for="Roughness">Roughness:</label>
             <input type="number" id="Roughness" placeholder="Roughness">
             
-            <!-- Button to trigger Lua code generation -->
+            <label for="FadeOut">FadeOut:</label>
+            <input type="number" id="FadeOut" placeholder="Fade out">
+            
+            <label for="FarSoundVol">FarSoundVol:</label>
+            <input type="number" id="FarSoundVol" placeholder="Far sound volume">
+            
+            <label for="FarSoundSpeed">FarSoundSpeed:</label>
+            <input type="number" id="FarSoundSpeed" placeholder="Far sound speed">
+            
+            <label for="Magnitude">Magnitude:</label>
+            <input type="number" id="Magnitude" placeholder="Magnitude">
+            
+            <label for="FadeIn">FadeIn:</label>
+            <input type="number" id="FadeIn" placeholder="Fade in">
+            
+            <label for="LightBrightness">LightBrightness:</label>
+            <input type="number" id="LightBrightness" placeholder="Light brightness">
+            
+            <label for="NearSoundSpeed">NearSoundSpeed:</label>
+            <input type="number" id="NearSoundSpeed" placeholder="Near sound speed">
+            
+            <label for="NearSoundVol">NearSoundVol:</label>
+            <input type="number" id="NearSoundVol" placeholder="Near sound volume">
+            
+            <label for="KillRange">KillRange:</label>
+            <input type="number" id="KillRange" placeholder="Kill range">
+            
+            <label for="LightRange">LightRange:</label>
+            <input type="number" id="LightRange" placeholder="Light range">
+            
+            <label for="ReboundTime">ReboundTime:</label>
+            <input type="number" id="ReboundTime" placeholder="Rebound time">
+            
             <button type="button" onclick="generateLuaCode()">Generate Lua Code</button>
         </form>
-
-        <hr>
         
-        <!-- Generated Lua code section -->
         <h2>Generated Lua Code:</h2>
-        <div class="generated-code" id="generatedCodeContainer">
+        <div id="generatedCodeContainer">
             <pre id="generatedCode"></pre>
         </div>
     </div>
-
-    <script src="script.js"></script> <!-- Link to your JavaScript file -->
+    <script src="script.js"></script>
 </body>
 </html>
