@@ -1,60 +1,85 @@
-def main():
-    near_sound_id = input("Enter NearSoundID (rbxassetid://...): ").strip()
-    spawn_next_room = get_boolean_input("Should SpawnNextRoom be true? (1 for yes, 0 for no): ")
-    entity_name = input("Enter EntityName: ").strip()
-    point_light_color = input("Enter PointLightColor (R, G, B): ").strip()
-    chase_players = get_boolean_input("Should ChasePlayers be true? (1 for yes, 0 for no): ")
-    min_rebounds = get_int_input("Enter MinRebounds: ")
-    image_id = input("Enter ImageID (rbxassetid://...): ").strip()
-    far_sound_id = input("Enter FarSoundID (rbxassetid://...): ").strip()
-    wait_time = get_int_input("Enter WaitTime: ")
-    speed = get_int_input("Enter Speed: ")
-    max_rebounds = get_int_input("Enter MaxRebounds: ")
-    death_message = input("Enter DeathMessage: ").strip()
-    roughness = get_int_input("Enter Roughness: ")
-
-    print("\nGenerated Lua Code:")
-    print(f'local args = {{')
-    print(f'    [1] = {{')
-    print(f'        ["NearSoundID"] = "{near_sound_id}",')
-    print(f'        ["SpawnNextRoom"] = {spawn_next_room},')
-    print(f'        ["EntityName"] = "{entity_name}",')
-    print(f'        ["PointLightColor"] = Color3.new({point_light_color}),')
-    print(f'        ["ChasePlayers"] = {chase_players},')
-    print(f'        ["MinRebounds"] = {min_rebounds},')
-    print(f'        ["ImageID"] = "{image_id}",')
-    print(f'        ["FarSoundID"] = "{far_sound_id}",')
-    print(f'        ["WaitTime"] = {wait_time},')
-    print(f'        ["Speed"] = {speed},')
-    print(f'        ["MaxRebounds"] = {max_rebounds},')
-    print(f'        ["DeathMessage"] = "{death_message}",')
-    print(f'        ["Roughness"] = {roughness}')
-    print(f'    }}')
-    print(f'}}')
-    print("\ngame:GetService(\"ReplicatedStorage\"):WaitForChild(\"Bricks\"):WaitForChild(\"CreateEntityNew\"):FireServer(unpack(args))")
-
+def get_user_input(prompt):
+    return input(prompt).strip()
 
 def get_boolean_input(prompt):
     while True:
         try:
-            choice = int(input(prompt).strip())
-            if choice == 1:
-                return True
-            elif choice == 0:
-                return False
+            value = int(input(prompt + " (1 for true, 0 for false): ").strip())
+            if value in [0, 1]:
+                return bool(value)
             else:
-                print("Invalid input. Please enter 1 for yes or 0 for no.")
+                print("Invalid input. Please enter 1 for true or 0 for false.")
         except ValueError:
-            print("Invalid input. Please enter a valid integer (1 or 0).")
-
+            print("Invalid input. Please enter 1 for true or 0 for false.")
 
 def get_int_input(prompt):
     while True:
         try:
             return int(input(prompt).strip())
         except ValueError:
-            print("Invalid input. Please enter a valid integer.")
+            print("Invalid input. Please enter an integer.")
 
+def main():
+    nearSoundID = get_user_input("Enter NearSoundID (rbxassetid://...): ")
+    spawnNextRoom = get_boolean_input("Should SpawnNextRoom be true?")
+    entityName = get_user_input("Enter EntityName: ")
+    pointLightColor = get_user_input("Enter PointLightColor (R, G, B): ")
+    chasePlayers = get_boolean_input("Should ChasePlayers be true?")
+    minRebounds = get_int_input("Enter MinRebounds: ")
+    imageID = get_user_input("Enter ImageID (rbxassetid://...): ")
+    farSoundID = get_user_input("Enter FarSoundID (rbxassetid://...): ")
+    waitTime = get_int_input("Enter WaitTime: ")
+    speed = get_int_input("Enter Speed: ")
+    maxRebounds = get_int_input("Enter MaxRebounds: ")
+    deathMessage = get_user_input("Enter DeathMessage: ")
+    roughness = get_int_input("Enter Roughness: ")
+    fadeOut = get_int_input("Enter FadeOut: ")
+    farSoundVol = get_int_input("Enter FarSoundVol: ")
+    farSoundSpeed = get_int_input("Enter FarSoundSpeed: ")
+    magnitude = get_int_input("Enter Magnitude: ")
+    fadeIn = get_int_input("Enter FadeIn: ")
+    lightBrightness = get_int_input("Enter LightBrightness: ")
+    nearSoundSpeed = get_int_input("Enter NearSoundSpeed: ")
+    nearSoundVol = get_int_input("Enter NearSoundVol: ")
+    killRange = get_int_input("Enter KillRange: ")
+    lightRange = get_int_input("Enter LightRange: ")
+    reboundTime = get_int_input("Enter ReboundTime: ")
+
+    lua_code = f'''
+local args = {{
+    [1] = {{
+        ["FadeOut"] = {fadeOut},
+        ["MinRebounds"] = {minRebounds},
+        ["FarSoundVol"] = {farSoundVol},
+        ["EntityName"] = "{entityName}",
+        ["FarSoundSpeed"] = {farSoundSpeed},
+        ["Magnitude"] = {magnitude},
+        ["Speed"] = {speed},
+        ["Roughness"] = {roughness},
+        ["NearSoundID"] = "{nearSoundID}",
+        ["PointLightColor"] = Color3.new({pointLightColor}),
+        ["MaxRebounds"] = {maxRebounds},
+        ["FadeIn"] = {fadeIn},
+        ["LightBrightness"] = {lightBrightness},
+        ["NearSoundSpeed"] = {nearSoundSpeed},
+        ["NearSoundVol"] = {nearSoundVol},
+        ["ChasePlayers"] = {str(chasePlayers).lower()},
+        ["KillRange"] = {killRange},
+        ["ImageID"] = "{imageID}",
+        ["FarSoundID"] = "{farSoundID}",
+        ["SpawnNextRoom"] = {str(spawnNextRoom).lower()},
+        ["WaitTime"] = {waitTime},
+        ["LightRange"] = {lightRange},
+        ["DeathMessage"] = "{deathMessage}",
+        ["ReboundTime"] = {reboundTime}
+    }}
+}}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Bricks"):WaitForChild("CreateEntityNew"):FireServer(unpack(args))
+    '''
+
+    print("\nGenerated Lua Code:")
+    print(lua_code)
 
 if __name__ == "__main__":
     main()
