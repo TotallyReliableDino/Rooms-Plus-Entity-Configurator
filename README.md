@@ -14,13 +14,9 @@ The Rooms+ Entity Configurator serves as a modding tool designed to function as 
     - HTML Standalone
       - C++ Terminal Port
         - Java Terminal Port
-        
           - Python Terminal Port
-          - **User-Friendly
 
-
-
-
+ 
 
 
 ## Installation
