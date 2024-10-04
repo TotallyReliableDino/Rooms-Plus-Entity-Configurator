@@ -1,5 +1,5 @@
 
-# Rooms+ Entity Configurator
+# Rooms+ Entity Configurator (FUCKING OUTDATED >:( )
 
 The Rooms+ Entity Configurator serves as a modding tool designed to function as an "enhanced" version of Rooms+ built-in Entity Creator
 
